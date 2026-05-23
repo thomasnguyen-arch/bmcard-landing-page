@@ -329,7 +329,7 @@ function CardVisual() {
 }
 
 function PartnerMarquee() {
-  const row = [...partners, ...partners, ...partners];
+  const row = [...partners, ...partners];
   return (
     <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
       <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused]">
@@ -592,7 +592,7 @@ export default function BMCardLandingPage() {
   if (onboarding) return <OnboardingPage onBack={() => setOnboarding(false)} />;
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+    <main key={lang} className="min-h-screen overflow-x-hidden bg-black text-white">
       <GlobalStyles />
       <section className="p-3 md:p-5">
         <div className="relative mx-auto overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-2xl shadow-black/70">
@@ -606,7 +606,7 @@ export default function BMCardLandingPage() {
                     <NavItem key={item} item={item} href={navTargets[i]} index={i} />
                   ))}
                 </nav>
-                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button></div></div>
+                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button type="button" onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button type="button" onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button></div></div>
               </div>
             </header>
 
