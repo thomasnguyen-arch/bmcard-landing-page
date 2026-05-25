@@ -384,11 +384,29 @@ function OnboardingPage({ onBack }) {
 
   const updateField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!requiredFilled) return;
-    setSubmitted(true);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!requiredFilled) return;
+
+  try {
+    const res = await fetch("/api/lead", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      setSubmitted(true);
+    } else {
+      alert("Có lỗi khi gửi thông tin.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Server error.");
+  }
+};
 
   const inputClass = "w-full rounded-2xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-white/30 focus:bg-black/70";
   const labelClass = "mb-2 block text-sm font-bold text-zinc-300";
