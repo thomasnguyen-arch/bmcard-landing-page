@@ -1,61 +1,87 @@
 export default async function handler(req, res) {
-if (req.method !== "POST") {
-return res.status(405).json({ ok: false });
-}
+  // Chỉ cho phép POST
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      ok: false,
+      message: "Method not allowed",
+    });
+  }
 
-try {
-const data = req.body;
+  try {
+    const {
+      name,
+      contact,
+      phone,
+      email,
+      country,
+      platform,
+      monthlySpend,
+      usage,
+      note,
+    } = req.body;
 
-```
-const message = `
-```
+    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+    // Check ENV
+    if (!BOT_TOKEN || !CHAT_ID) {
+      return res.status(500).json({
+        ok: false,
+        message: "Missing Telegram ENV variables",
+      });
+    }
+
+    const text = `
 🔥 NEW BMCard LEAD
 
-👤 Name: ${data.name}
-📱 Contact: ${data.contact}
-☎️ Phone: ${data.phone}
-📧 Email: ${data.email}
-🌍 Country: ${data.country}
-📣 Platform: ${data.platform}
-💰 Monthly Spend: ${data.monthlySpend}
-🏢 Usage: ${data.usage}
+👤 Name: ${name || "-"}
+💬 Contact: ${contact || "-"}
+📞 Phone: ${phone || "-"}
+📧 Email: ${email || "-"}
+🌍 Country: ${country || "-"}
+
+📢 Platform: ${platform || "-"}
+💰 Monthly Spend: ${monthlySpend || "-"}
+🧩 Usage: ${usage || "-"}
 
 📝 Note:
-${data.note || "N/A"}
+${note || "-"}
 `;
 
-```
-const telegramRes = await fetch(
-  `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_CHAT_ID,
-      text: message,
-    }),
+    // Send Telegram
+    const telegramResponse = await fetch(
+      `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text,
+        }),
+      }
+    );
+
+    const telegramData = await telegramResponse.json();
+
+    // Telegram lỗi
+    if (!telegramData.ok) {
+      return res.status(500).json({
+        ok: false,
+        telegramError: telegramData,
+      });
+    }
+
+    // Thành công
+    return res.status(200).json({
+      ok: true,
+      message: "Lead sent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
   }
-);
-
-if (!telegramRes.ok) {
-  return res.status(500).json({
-    ok: false,
-    error: "Telegram send failed",
-  });
-}
-
-return res.status(200).json({
-  ok: true,
-});
-```
-
-} catch (error) {
-return res.status(500).json({
-ok: false,
-error: error.message,
-});
-}
 }
