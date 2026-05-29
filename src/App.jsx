@@ -376,7 +376,7 @@ const obText = {
     ? "Fill in your information so the BMCard team can help set up a card system that fits your advertising needs."
     : "Điền thông tin để đội ngũ BMCard hỗ trợ setup hệ thống thẻ phù hợp với nhu cầu quảng cáo của bạn.",
   name: isEN ? "Full name *" : "Họ và tên *",
-  contact: isEN ? "Telegram or Zalo *" : "Telegram hoặc Zalo *",
+  contact: isEN ? "Telegram Handle *" : "Telegram hoặc Zalo *",
   phone: isEN ? "Phone number *" : "Số điện thoại *",
   email: "Email *",
   country: isEN ? "Country *" : "Quốc gia *",
@@ -408,7 +408,9 @@ const obText = {
     note: "",
   });
 
-  const requiredFilled = form.name && form.contact && form.phone && form.email && form.country;
+  const requiredFilled = lang === "en"
+  ? form.name && form.contact && form.email && form.country
+  : form.name && form.contact && form.phone && form.email && form.country;
 
   const updateField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -500,12 +502,19 @@ const obText = {
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
                       <label className={labelClass}>{obText.contact}</label>
-                      <input className={inputClass} value={form.contact} onChange={(e) => updateField("contact", e.target.value)} placeholder="@username / Zalo" />
+                      <input className={inputClass} value={form.contact} onChange={(e) => updateField("contact", e.target.value)} placeholder={isEN ? "@telegram_username" : "@username / Zalo"} />
                     </div>
-                    <div>
-                      <label className={labelClass}>{obText.phone}</label>
-                      <input className={inputClass} value={form.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="0934 571 919" />
-                    </div>
+                    {!isEN && (
+  <div>
+    <label className={labelClass}>{obText.phone}</label>
+    <input
+      className={inputClass}
+      value={form.phone}
+      onChange={(e) => updateField("phone", e.target.value)}
+      placeholder="0934 571 919"
+    />
+  </div>
+)}
                   </div>
 
                   <div className="grid gap-5 md:grid-cols-2">
