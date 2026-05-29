@@ -543,7 +543,7 @@ const obText = {
 
                   <div>
                     <label className={labelClass}>{obText.note}</label>
-                    <textarea className={`${inputClass} min-h-[120px] resize-none`} value={form.note} onChange={(e) => updateField("note", e.target.value)} {obText.notePlaceholder}              
+                   <textarea className={`${inputClass} min-h-[120px] resize-none`} value={form.note} onChange={(e) => updateField("note", e.target.value)} placeholder={obText.notePlaceholder} />              
     </div>
 
                   {!requiredFilled && <p className="text-sm text-zinc-500">{obText.required}</p>}
