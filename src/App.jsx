@@ -453,13 +453,13 @@ const obText = {
                 <Sparkles className="h-4 w-4" /> BMCard Onboarding
               </div>
 
-              <h1 className="mt-6 max-w-xl text-4xl font-black leading-[1.08] tracking-[-0.03em] md:text-6xl">
-                Bắt đầu scale quảng cáo với BMCard
-              </h1>
+              <h1 className="mt-6 ...">
+  {obText.title}
+</h1>
 
-              <p className="mt-5 max-w-xl text-lg leading-8 text-zinc-400">
-                Điền thông tin để đội ngũ BMCard hỗ trợ setup hệ thống thẻ phù hợp với nhu cầu quảng cáo của bạn.
-              </p>
+<p className="mt-5 ...">
+  {obText.desc}
+</p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {[
@@ -635,7 +635,11 @@ export default function BMCardLandingPage() {
   const t = content[lang];
   const navTargets = ["#", "#fees", "#section-1", "#section-2", "#section-3", "#section-5"]; 
   if (contact) return <ContactPage onBack={() => setContact(false)} />;
-  if (onboarding) return <OnboardingPage onBack={() => setOnboarding(false)} />;
+ if (onboarding)
+  return <OnboardingPage
+    onBack={() => setOnboarding(false)}
+    lang={lang}
+  />;
 
   return (
     <main key={lang} className="min-h-screen overflow-x-hidden bg-black text-white">
