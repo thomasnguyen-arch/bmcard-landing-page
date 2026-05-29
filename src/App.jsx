@@ -366,7 +366,35 @@ function MotionCard({ children, className = "" }) {
   );
 }
 
-function OnboardingPage({ onBack }) {
+function OnboardingPage({ onBack, lang }) {
+const isEN = lang === "en";
+
+const obText = {
+  back: isEN ? "← Back" : "← Quay lại",
+  title: isEN ? "Start scaling ads with BMCard" : "Bắt đầu scale quảng cáo với BMCard",
+  desc: isEN
+    ? "Fill in your information so the BMCard team can help set up a card system that fits your advertising needs."
+    : "Điền thông tin để đội ngũ BMCard hỗ trợ setup hệ thống thẻ phù hợp với nhu cầu quảng cáo của bạn.",
+  name: isEN ? "Full name *" : "Họ và tên *",
+  contact: isEN ? "Telegram or Zalo *" : "Telegram hoặc Zalo *",
+  phone: isEN ? "Phone number *" : "Số điện thoại *",
+  email: "Email *",
+  country: isEN ? "Country *" : "Quốc gia *",
+  platform: isEN ? "Advertising platform currently used" : "Nền tảng quảng cáo đang sử dụng",
+  spend: isEN ? "Monthly advertising spend" : "Số tiền chạy quảng cáo mỗi tháng",
+  usage: isEN ? "Usage type" : "Nhu cầu sử dụng",
+  note: isEN ? "Additional note" : "Nội dung thêm / ghi chú",
+  notePlaceholder: isEN
+    ? "Which platforms are you running, monthly volume, how many cards do you need..."
+    : "Bạn đang chạy nền tảng nào, volume bao nhiêu, cần bao nhiêu thẻ...",
+  required: isEN ? "Please fill in all required fields." : "Vui lòng điền các trường có dấu *.",
+  submit: isEN ? "Submit information" : "Gửi thông tin",
+  successTitle: isEN ? "Information submitted" : "Thông tin đã được gửi",
+  successDesc: isEN
+    ? "The BMCard team will contact you and help set up a system that fits your advertising needs."
+    : "Đội ngũ BMCard sẽ liên hệ và hỗ trợ setup hệ thống phù hợp với nhu cầu quảng cáo của bạn.",
+  home: isEN ? "Back to homepage" : "Quay lại trang chủ",
+};
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -419,7 +447,7 @@ function OnboardingPage({ onBack }) {
         <div className="w-full overflow-hidden rounded-[2rem] border border-white/10 bg-black/70 shadow-2xl shadow-black/70 backdrop-blur-2xl">
           <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative border-b border-white/10 p-8 md:p-12 lg:border-b-0 lg:border-r">
-              <Button variant="secondary" onClick={onBack}>← Quay lại</Button>
+              <Button variant="secondary" onClick={onBack}>{obText.back}</Button>
 
               <div className="mt-12 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-zinc-300">
                 <Sparkles className="h-4 w-4" /> BMCard Onboarding
@@ -456,50 +484,50 @@ function OnboardingPage({ onBack }) {
                   <div className="grid h-20 w-20 place-items-center rounded-full bg-white text-black">
                     <CheckCircle2 className="h-10 w-10" />
                   </div>
-                  <h2 className="mt-8 text-4xl font-black">Thông tin đã được gửi</h2>
+                  <h2 className="mt-8 text-4xl font-black">{obText.successTitle}</h2>
                   <p className="mt-4 max-w-md leading-7 text-zinc-400">
-                    Đội ngũ BMCard sẽ liên hệ và hỗ trợ setup hệ thống phù hợp với nhu cầu quảng cáo của bạn.
+                    {obText.successDesc}
                   </p>
-                  <div className="mt-8"><Button onClick={onBack}>Quay lại trang chủ</Button></div>
+                  <div className="mt-8"><Button onClick={onBack}>{obText.home}</Button></div>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label className={labelClass}>Họ và tên *</label>
+                    <label className={labelClass}>{obText.name}</label>
                     <input className={inputClass} value={form.name} onChange={(e) => updateField("name", e.target.value)} placeholder="Nguyễn Văn A" />
                   </div>
 
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                      <label className={labelClass}>Telegram hoặc Zalo *</label>
+                      <label className={labelClass}>{obText.contact}</label>
                       <input className={inputClass} value={form.contact} onChange={(e) => updateField("contact", e.target.value)} placeholder="@username / Zalo" />
                     </div>
                     <div>
-                      <label className={labelClass}>Số điện thoại *</label>
+                      <label className={labelClass}>{obText.phone}</label>
                       <input className={inputClass} value={form.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="0934 571 919" />
                     </div>
                   </div>
 
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                      <label className={labelClass}>Email *</label>
+                      <label className={labelClass}>{obText.email}</label>
                       <input className={inputClass} type="email" value={form.email} onChange={(e) => updateField("email", e.target.value)} placeholder="you@company.com" />
                     </div>
                     <div>
-                      <label className={labelClass}>Quốc gia *</label>
+                      <label className={labelClass}>{obText.country}</label>
                       <input className={inputClass} value={form.country} onChange={(e) => updateField("country", e.target.value)} placeholder="Việt Nam" />
                     </div>
                   </div>
 
                   <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                      <label className={labelClass}>Nền tảng quảng cáo đang sử dụng</label>
+                      <label className={labelClass}>{obText.platform}</label>
                       <select className={inputClass} value={form.platform} onChange={(e) => updateField("platform", e.target.value)}>
                         {["Google Ads", "TikTok Ads", "Meta Ads", "Affiliate", "Agency", "Other"].map((item) => <option key={item}>{item}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className={labelClass}>Số tiền chạy quảng cáo mỗi tháng</label>
+                      <label className={labelClass}>{obText.spend}</label>
                       <select className={inputClass} value={form.monthlySpend} onChange={(e) => updateField("monthlySpend", e.target.value)}>
                         {["< $1,000", "$1,000 - $10,000", "$10,000 - $50,000", "$50,000+"].map((item) => <option key={item}>{item}</option>)}
                       </select>
@@ -507,21 +535,21 @@ function OnboardingPage({ onBack }) {
                   </div>
 
                   <div>
-                    <label className={labelClass}>Nhu cầu sử dụng</label>
+                    <label className={labelClass}>{obText.usage}</label>
                     <select className={inputClass} value={form.usage} onChange={(e) => updateField("usage", e.target.value)}>
                       {["Cá nhân", "Team", "Agency", "Enterprise"].map((item) => <option key={item}>{item}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label className={labelClass}>Nội dung thêm / ghi chú</label>
-                    <textarea className={`${inputClass} min-h-[120px] resize-none`} value={form.note} onChange={(e) => updateField("note", e.target.value)} placeholder="Bạn đang chạy nền tảng nào, volume bao nhiêu, cần bao nhiêu thẻ..." />
-                  </div>
+                    <label className={labelClass}>{obText.note}</label>
+                    <textarea className={`${inputClass} min-h-[120px] resize-none`} value={form.note} onChange={(e) => updateField("note", e.target.value)} {obText.notePlaceholder}              
+    </div>
 
-                  {!requiredFilled && <p className="text-sm text-zinc-500">Vui lòng điền các trường có dấu *.</p>}
+                  {!requiredFilled && <p className="text-sm text-zinc-500">{obText.required}</p>}
 
                   <button type="submit" className="w-full rounded-2xl bg-white px-6 py-4 text-sm font-black text-black shadow-xl shadow-white/10 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-40" disabled={!requiredFilled}>
-                    Gửi thông tin
+                    {obText.submit}
                   </button>
                 </form>
               )}
