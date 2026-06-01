@@ -424,7 +424,10 @@ const obText = {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+  ...form,
+  ref: localStorage.getItem("bmcard_ref") || "Direct",
+}),
     });
 
     if (res.ok) {
@@ -618,6 +621,80 @@ function ContactPage({ onBack }) {
     </main>
   );
 }
+function AffiliatePage({ onBack, lang }) {
+  const isEN = lang === "en";
+  const [code, setCode] = useState("");
+
+  const cleanCode = code.toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+  const link = `https://www.bm-card.com/?ref=${cleanCode}`;
+
+  const copyLink = async () => {
+    if (!cleanCode) return;
+    await navigator.clipboard.writeText(link);
+    alert(isEN ? "Referral link copied!" : "Đã copy link CTV!");
+  };
+
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <GlobalStyles />
+      <HeroBackground />
+
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl items-center px-6 py-16">
+        <div className="w-full rounded-[2rem] border border-white/10 bg-black/70 p-8 shadow-2xl shadow-black/70 backdrop-blur-2xl md:p-12">
+          <Button variant="secondary" onClick={onBack}>
+            {isEN ? "← Back" : "← Quay lại"}
+          </Button>
+
+          <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-zinc-300">
+            <Sparkles className="h-4 w-4" />
+            {isEN ? "Affiliate Program" : "Chương trình CTV"}
+          </div>
+
+          <h1 className="mt-6 max-w-3xl text-4xl font-black leading-[1.08] tracking-[-0.03em] md:text-6xl">
+            {isEN ? "Create your BMCard referral link" : "Tạo link CTV BMCard của bạn"}
+          </h1>
+
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">
+            {isEN
+              ? "Generate your own referral link and share BMCard with advertisers, media buyers, agencies, and affiliate teams."
+              : "Tạo link giới thiệu riêng và chia sẻ BMCard tới advertiser, media buyer, agency và affiliate team."}
+          </p>
+
+          <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 md:p-8">
+            <label className="mb-3 block text-sm font-bold text-zinc-300">
+              {isEN ? "Your referral code" : "Mã CTV của bạn"}
+            </label>
+
+            <input
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              placeholder={isEN ? "yourcode" : "ma-cua-ban"}
+              className="w-full rounded-2xl border border-white/10 bg-black/50 px-4 py-4 text-white outline-none transition placeholder:text-zinc-600 focus:border-white/30"
+            />
+
+            {cleanCode && (
+              <div className="mt-6 rounded-2xl border border-white/10 bg-black/50 p-5">
+                <div className="text-sm font-bold text-zinc-500">
+                  {isEN ? "Your referral link" : "Link CTV của bạn"}
+                </div>
+
+                <div className="mt-3 break-all text-lg font-black text-white">
+                  {link}
+                </div>
+
+                <div className="mt-5">
+                  <Button onClick={copyLink}>
+                    {isEN ? "Copy link" : "Copy link"}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
 
 function NavItem({ item, href, index }) {
   return (
@@ -641,9 +718,12 @@ export default function BMCardLandingPage() {
   const [lang, setLang] = useState("vi");
   const [contact, setContact] = useState(false);
   const [onboarding, setOnboarding] = useState(false);
+const [affiliate, setAffiliate] = useState(false);
   const t = content[lang];
   const navTargets = ["#", "#fees", "#section-1", "#section-2", "#section-3", "#section-5"]; 
   if (contact) return <ContactPage onBack={() => setContact(false)} />;
+if (affiliate)
+  return <AffiliatePage lang={lang} onBack={() => setAffiliate(false)} />;
  if (onboarding)
   return <OnboardingPage
     onBack={() => setOnboarding(false)}
@@ -665,7 +745,11 @@ export default function BMCardLandingPage() {
                     <NavItem key={item} item={item} href={navTargets[i]} index={i} />
                   ))}
                 </nav>
-                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button type="button" onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button type="button" onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button></div></div>
+                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button type="button" onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button type="button" onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block">
+  <Button variant="secondary" onClick={() => setAffiliate(true)}>
+    {lang === "en" ? "Affiliate Program" : "Chương trình CTV"}
+  </Button>
+</div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button></div></div>
               </div>
             </header>
 
