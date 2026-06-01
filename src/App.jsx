@@ -22,7 +22,7 @@ import {
 
 const content = {
   vi: {
-    nav: ["Trang chủ", "Phí", "Lợi ích", "Giải pháp", "Cách hoạt động", "FAQ"],
+    nav: ["Trang chủ", "Phí", "Lợi ích", "Giải pháp", "Cách hoạt động", "Chương trình CTV", "FAQ"],
     cta: "Bắt đầu ngay",
     contact: "Liên hệ sales",
     badge: "Dành cho advertiser & agency",
@@ -88,7 +88,7 @@ const content = {
     finalDesc: "Bắt đầu mở thẻ ảo, nạp bằng USDT và kiểm soát ngân sách campaign bằng hệ thống thanh toán dành cho advertiser.",
   },
   en: {
-    nav: ["Home", "Fees", "Benefits", "Solutions", "How it works", "FAQ"],
+    nav: ["Home", "Fees", "Benefits", "Solutions", "How it works", "Affiliate Program", "FAQ"],
     cta: "Get started",
     contact: "Contact sales",
     badge: "Built for advertisers & agencies",
@@ -745,11 +745,9 @@ if (affiliate)
                     <NavItem key={item} item={item} href={navTargets[i]} index={i} />
                   ))}
                 </nav>
-                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button type="button" onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button type="button" onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block">
-  <Button variant="secondary" onClick={() => setAffiliate(true)}>
-    {lang === "en" ? "Affiliate Program" : "Chương trình CTV"}
-  </Button>
-</div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button></div></div>
+                <div className="flex items-center gap-3"><div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-sm font-bold"><button type="button" onClick={() => setLang("vi")} className={`rounded-lg px-3 py-2 ${lang === "vi" ? "bg-white text-black" : "text-zinc-300"}`}>VI</button><button type="button" onClick={() => setLang("en")} className={`rounded-lg px-3 py-2 ${lang === "en" ? "bg-white text-black" : "text-zinc-300"}`}>EN</button></div><div className="hidden md:block"><Button variant="secondary" onClick={() => setContact(true)}>{t.contact}</Button></div><div className="hidden xl:block"><Button onClick={() => setOnboarding(true)}>{t.cta}</Button>
+</div>
+	</div>
               </div>
             </header>
 
