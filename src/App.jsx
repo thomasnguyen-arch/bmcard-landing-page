@@ -11,7 +11,7 @@ import {
 /* ─── CONTENT ─────────────────────────────────────────────────────────────── */
 const content = {
   vi: {
-    nav: ["Enterprise", "Cashback", "Thẻ", "Giải pháp"],
+    nav: ["Enterprise", "Cashback", "Thẻ", "Giải pháp", "So sánh"],
     cta: "Đăng ký",
     heroHeadline: "Thẻ ảo cho quảng cáo hiệu suất cao",
     heroSub: "Nạp USDT, mở vô hạn thẻ, kiểm soát chi tiêu và tối ưu ngân sách quảng cáo trên mọi nền tảng.",
@@ -122,7 +122,7 @@ const content = {
     footerDesc: "Thẻ ảo tối ưu cho advertiser, agency và affiliate team.",
   },
   en: {
-    nav: ["Enterprise", "Cashback", "Cards", "Solutions"],
+    nav: ["Enterprise", "Cashback", "Cards", "Solutions", "Compare"],
     cta: "Sign up",
     heroHeadline: "Virtual cards built for performance advertising",
     heroSub: "Top up with USDT, create unlimited virtual cards, control spending and optimize ad budgets across all platforms.",
@@ -553,7 +553,7 @@ function Nav({ lang, setLang, t, openModal, openContact, openAff }) {
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
   }, []);
-  const anchors = ["#enterprise", "#cashback", "#cards", "#solutions"];
+  const anchors = ["#enterprise", "#cashback", "#cards", "#solutions", "#compare"];
   return (
     <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(255,255,255,0.97)", backdropFilter: "blur(12px)", borderBottom: "1px solid #f0f0f0" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", height: 60, gap: isMob ? 0 : 32 }}>
