@@ -1472,11 +1472,11 @@ function Landing() {
       <Hero t={t} openModal={openModal} />
       <StatsTicker />
       <SimpleSection t={t} />
+      <AdsComparisonSection openModal={openModal} />
       <AffiliateSection t={t} />
       <PremiumSection t={t} openModal={openModal} />
       <TeamworkSection t={t} />
       <CardCatalog t={t} openModal={openModal} />
-      <AdsComparisonSection openModal={openModal} />
       <PricingSection t={t} />
       <FaqSection t={t} />
       <FinalCta t={t} openModal={openModal} />
