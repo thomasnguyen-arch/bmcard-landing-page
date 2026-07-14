@@ -300,7 +300,7 @@ function GlobalStyles() {
 
 /* ─── REGISTER MODAL ──────────────────────────────────────────────────────── */
 function RegisterModal({ open, onClose, lang, refSource }) {
-  const [form, setForm] = React.useState({ name: "", contact: "", platform: "" });
+  const [form, setForm] = React.useState({ name: "", email: "", contact: "", platform: "" });
   const [submitted, setSubmitted] = React.useState(false);
   const platforms = ["Meta / Facebook Ads", "Google Ads", "TikTok Ads", "Nhiều nền tảng"];
 
@@ -318,7 +318,7 @@ function RegisterModal({ open, onClose, lang, refSource }) {
 
   const handleClose = () => {
     onClose();
-    setTimeout(() => { setSubmitted(false); setForm({ name: "", contact: "", platform: "" }); }, 300);
+    setTimeout(() => { setSubmitted(false); setForm({ name: "", email: "", contact: "", platform: "" }); }, 300);
   };
 
   return (
@@ -359,6 +359,19 @@ function RegisterModal({ open, onClose, lang, refSource }) {
                       required value={form.name}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                       placeholder={lang === "vi" ? "Nguyễn Văn A" : "John Smith"}
+                      style={{ width: "100%", padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e5e5e5", fontSize: 15, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s", fontFamily: "inherit", color: "#111", background: "#fff" }}
+                      onFocus={e => e.target.style.borderColor = "#FF6500"}
+                      onBlur={e => e.target.style.borderColor = "#e5e5e5"}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 13, fontWeight: 600, color: "#444", display: "block", marginBottom: 6 }}>
+                      Email <span style={{ color: "#FF6500" }}>*</span>
+                    </label>
+                    <input
+                      required type="email" value={form.email}
+                      onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                      placeholder={lang === "vi" ? "example@gmail.com" : "example@gmail.com"}
                       style={{ width: "100%", padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e5e5e5", fontSize: 15, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s", fontFamily: "inherit", color: "#111", background: "#fff" }}
                       onFocus={e => e.target.style.borderColor = "#FF6500"}
                       onBlur={e => e.target.style.borderColor = "#e5e5e5"}
